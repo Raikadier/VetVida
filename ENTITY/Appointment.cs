@@ -27,5 +27,19 @@ namespace ENTITY
         {
             return $"Date: {Date}, Diagnostic: {Diagnostic}, Veterinary: {Veterinary}, Pet: {Pet}";
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Appointment appointment)
+            {
+                return Date == appointment.Date &&
+                       Diagnostic == appointment.Diagnostic &&
+                       EqualityComparer<Veterinary>.Default.Equals(Veterinary, appointment.Veterinary) &&
+                       EqualityComparer<Pet>.Default.Equals(Pet, appointment.Pet);
+            }
+            return false;
+        }
+
+        // i can see you...
     }
 }
