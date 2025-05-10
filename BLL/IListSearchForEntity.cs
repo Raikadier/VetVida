@@ -8,6 +8,6 @@ namespace BLL
 {
     interface IListSearchForEntity <T>
     {
-        List<T> SearchForEntity(int id);
+        List<T> SearchForEntity(int op,int id);
     }
 }

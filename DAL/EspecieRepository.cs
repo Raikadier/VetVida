@@ -10,7 +10,8 @@ namespace DAL
 {
     public class EspecieRepository : FileRepository<Especie>
     {
-        public EspecieRepository(string file) : base(file) { }
+        public EspecieRepository(string file) : base(file) {}
+        
         public override List<Especie> Read()
         {
             try
@@ -21,7 +22,12 @@ namespace DAL
                 {
                     especies.Add(MappingType(reader.ReadLine()));
                 }
+                reader.Close();
                 return especies;
+            }
+            catch (FileNotFoundException)
+            {
+                return new List<Especie>();
             }
             catch (Exception)
             {

@@ -8,7 +8,7 @@ namespace ENTITY
 {
     public class Especie : NameEntity
     {
-        public List<Raza> Raza { get; set; }
+        public List<Raza> Raza { get; set; } = new List<Raza>();
 
         public override string ToString()
         {

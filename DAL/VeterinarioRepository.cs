@@ -25,6 +25,10 @@ namespace DAL
                 reader.Close();
                 return veterinarios;
             }
+            catch(FileNotFoundException)
+            {
+                return new List<Veterinario>();
+            }
             catch (Exception)
             {
                 return new List<Veterinario>();

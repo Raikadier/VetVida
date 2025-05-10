@@ -24,6 +24,10 @@ namespace DAL
                 reader.Close();
                 return consultas;
             }
+            catch (FileNotFoundException)
+            {
+                return new List<ConsultaVeterinaria>();
+            }
             catch (Exception)
             {
                 return new List<ConsultaVeterinaria>();

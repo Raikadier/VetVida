@@ -45,7 +45,6 @@
     <Compile Include="EspecieService.cs" />
     <Compile Include="IListSearchForEntity.cs" />
     <Compile Include="ILogic.cs" />
-    <Compile Include="LogicBase.cs" />
     <Compile Include="MascotaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropietarioService.cs" />

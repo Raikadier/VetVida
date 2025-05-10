@@ -7,27 +7,34 @@ using System.Threading.Tasks;
 using DAL;
 namespace BLL
 {
-    public class RazaService : LogicBase<Raza> , IListSearchForEntity<Raza>
+    public class RazaService : ILogic<Raza> , IListSearchForEntity<Raza>
     {
-        private readonly FileRepository<Raza> repositorio;
-        private RazaRepository razaRepository;
+        private readonly RazaRepository razaRepository;
+        private readonly MascotaService mascotaService;
         private List<Raza> razas;
-        public RazaService(FileRepository<Raza> repositorio) : base(repositorio)
+        public RazaService()
         {
-            this.repositorio = repositorio;
-            razaRepository = new RazaRepository("Raza.txt");
-            razas = repositorio.Read();
+            razaRepository = new RazaRepository(Archivos.ARC_RAZA);
+            mascotaService = new MascotaService();
+            razas = razaRepository.Read();
         }
-        public List<Raza> SearchForEntity(int idEspecie)
+        public List<Raza> SearchForEntity(int op,int idEspecie)
         {
-            List<Raza> razas = repositorio.Read();
             return razas.Where(r => r.especie.Id == idEspecie).ToList();
         }
 
-        public override ResultadoOperacion Save(Raza raza)
+        public ResultadoOperacion Save(Raza raza)
         {
             try
             {
+                if (raza == null)
+                {
+                    return new ResultadoOperacion
+                    {
+                        Exito = false,
+                        Mensaje = $"La raza es nula"
+                    };
+                }
                 if (GetById(raza.Id) != null)
                 {
                     return new ResultadoOperacion
@@ -36,8 +43,9 @@ namespace BLL
                         Mensaje = $"Esta raza ya esta registrada\nId: {GetById(raza.Id).Id} | Nombre: {GetById(raza.Id).Nombre}"
                     };
                 }
-                if (repositorio.Save(raza))
+                if (razaRepository.Save(raza))
                 {
+                    razas.Add(raza);
                     return new ResultadoOperacion
                     {
                         Exito = true,
@@ -53,23 +61,24 @@ namespace BLL
                     };
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ResultadoOperacion
                 {
                     Exito = false,
-                    Mensaje = string.Empty
+                    Mensaje = $"Error al guardar la raza \nId: {raza.Id} | Nombre: {raza.Nombre}"
                 };
             }
         }
-        public override ResultadoOperacion Delete(int id)
+        public ResultadoOperacion Delete(int id)
         {
             var raza = GetById(id);
             if (raza != null)
             {
+                mascotaService.DeleteByRaza(raza.Id);
                 string message = $"La raza se elimino correctamente\nId: {raza.Id} | Nombre: {raza.Nombre}";
                 razas.Remove(raza);
-                repositorio.SaveList(razas);
+                razaRepository.SaveList(razas);
                 return new ResultadoOperacion
                 {
                     Exito = true,
@@ -83,19 +92,27 @@ namespace BLL
             };
         }
 
-        public override List<Raza> GetAll()
+        public List<Raza> GetAll()
         {
-            return razas;
+            return razaRepository.Read();
         }
 
-        public override Raza GetById(int id)
+        public Raza GetById(int id)
         {
             var raza = BuscadorEntidad.ObtenerRazaPorId(razas, id);
             return raza;
         }
 
-        public override ResultadoOperacion Update(Raza raza)
+        public ResultadoOperacion Update(Raza raza)
         {
+            if (raza == null)
+            {
+                return new ResultadoOperacion()
+                {
+                    Exito = false,
+                    Mensaje = $"La raza es nula"
+                };
+            }
             if (GetById(raza.Id) != null)
             {
                 foreach (var r in razas)
@@ -107,7 +124,7 @@ namespace BLL
                         r.especie=raza.especie;
                     }
                 }
-                repositorio.SaveList(razas);
+                razaRepository.SaveList(razas);
                 return new ResultadoOperacion()
                 {
                     Exito = true,
@@ -118,6 +135,22 @@ namespace BLL
             {
                 Exito = false,
                 Mensaje = $"La raza no se encontro"
+            };
+        }
+        public ResultadoOperacion DeleteByEspecie(Especie especie)
+        {
+            razas = razaRepository.Read();
+            var razasToDelete = razas.Where(r => r.especie.Id == especie.Id).ToList();
+            foreach (var raza in razasToDelete)
+            {
+                mascotaService.DeleteByRaza(raza.Id);
+            }
+            razas.RemoveAll(r => r.especie.Id == especie.Id);
+            razaRepository.SaveList(razas);
+            return new ResultadoOperacion()
+            {
+                Exito = true,
+                Mensaje = string.Empty
             };
         }
     }

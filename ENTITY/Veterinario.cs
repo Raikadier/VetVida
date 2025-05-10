@@ -13,5 +13,9 @@ namespace ENTITY
         {
             return $"{Id};{Nombre};{Apellido};{Cedula};{Telefono};{Especialidad}";
         }
+        public string ToString2()
+        {
+            return $"{Id} | {Nombre} {Apellido} | {Cedula} | {Telefono} | {Especialidad}";
+        }
     }
 }

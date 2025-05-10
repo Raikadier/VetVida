@@ -21,7 +21,12 @@ namespace DAL
                 {
                     razas.Add(MappingType(reader.ReadLine()));
                 }
+                reader.Close();
                 return razas;
+            }
+            catch (FileNotFoundException)
+            {
+                return new List<Raza>();
             }
             catch (Exception)
             {

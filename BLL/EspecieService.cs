@@ -7,22 +7,30 @@ using System.Threading.Tasks;
 using DAL;
 namespace BLL
 {
-    public class EspecieService : LogicBase<Especie>
+    public class EspecieService : ILogic<Especie>
     {
-        private readonly FileRepository<Especie> repositorio;
-        private EspecieRepository especieRepository;
+        private readonly EspecieRepository especieRepository;
+        private readonly RazaService razaService;
         private List<Especie> especies;
-        public EspecieService(FileRepository<Especie> repositorio) : base(repositorio)
+        public EspecieService()
         {
-            this.repositorio = repositorio;
-            especieRepository = new EspecieRepository("Especie.txt");
-            especies = repositorio.Read();
+            especieRepository = new EspecieRepository(Archivos.ARC_ESPECIE);
+            razaService = new RazaService();
+            especies = especieRepository.Read();
         }
 
-        public override ResultadoOperacion Save(Especie especie)
+        public ResultadoOperacion Save(Especie especie)
         {
             try
             {
+                if (especie == null)
+                {
+                    return new ResultadoOperacion
+                    {
+                        Exito = false,
+                        Mensaje = $"La especie es nula"
+                    };
+                }
                 if (GetById(especie.Id) != null)
                 {
                     return new ResultadoOperacion
@@ -31,8 +39,9 @@ namespace BLL
                         Mensaje = $"Esta especie ya esta registrada\nId: {GetById(especie.Id).Id} | Nombre: {GetById(especie.Id).Nombre}"
                     };
                 }
-                if (repositorio.Save(especie))
+                if (especieRepository.Save(especie))
                 {
+                    especies.Add(especie);
                     return new ResultadoOperacion
                     {
                         Exito = true,
@@ -53,18 +62,19 @@ namespace BLL
                 return new ResultadoOperacion
                 {
                     Exito = false,
-                    Mensaje = string.Empty
+                    Mensaje = $"XD Error al guardar la especie \nId: {especie.Id}\n{ex.Message}"
                 };
             }
         }
-        public override ResultadoOperacion Delete(int id)
+        public ResultadoOperacion Delete(int id)
         {
             var especie = GetById(id);
             if (especie != null)
             {
                 string message = $"La especie se elimino correctamente\nId: {especie.Id} | Nombre: {especie.Nombre}";
+                razaService.DeleteByEspecie(especie);
                 especies.Remove(especie);
-                repositorio.SaveList(especies);
+                especieRepository.SaveList(especies);
                 return new ResultadoOperacion
                 {
                     Exito = true,
@@ -78,18 +88,18 @@ namespace BLL
             };
         }
 
-        public override List<Especie> GetAll()
+        public List<Especie> GetAll()
         {
-            return especies;
+            return especieRepository.Read();
         }
 
-        public override Especie GetById(int id)
+        public Especie GetById(int id)
         {
             var especie = BuscadorEntidad.ObtenerEspeciePorId(especies, id);
             return especie;
         }
 
-        public override ResultadoOperacion Update(Especie especie)
+        public ResultadoOperacion Update(Especie especie)
         {
             if (GetById(especie.Id) != null)
             {
@@ -101,7 +111,7 @@ namespace BLL
                         e.Nombre = especie.Nombre;
                     }
                 }
-                repositorio.SaveList(especies);
+                especieRepository.SaveList(especies);
                 return new ResultadoOperacion()
                 {
                     Exito = true,

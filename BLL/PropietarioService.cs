@@ -7,22 +7,30 @@ using System.Threading.Tasks;
 using DAL;
 namespace BLL
 {
-    public class PropietarioService : LogicBase<Propietario>
+    public class PropietarioService : ILogic<Propietario>
     {
-        private readonly FileRepository<Propietario> repositorio;
-        private PropietarioRepository propietarioRepository;
+        private readonly MascotaService mascotaService;
+        private readonly PropietarioRepository propietarioRepository;
         private List<Propietario> propietarios;
-        public PropietarioService(FileRepository<Propietario> repositorio) : base(repositorio)
+        public PropietarioService()
         {
-            this.repositorio = repositorio;
-            propietarioRepository = new PropietarioRepository("Propietario.txt");
-            propietarios = repositorio.Read();
+            propietarioRepository = new PropietarioRepository(Archivos.ARC_PROPIETARIO);
+            mascotaService = new MascotaService();
+            propietarios = propietarioRepository.Read();
         }
 
-        public override ResultadoOperacion Save(Propietario propietario)
+        public ResultadoOperacion Save(Propietario propietario)
         {
             try
             {
+                if (propietario == null)
+                {
+                    return new ResultadoOperacion
+                    {
+                        Exito = false,
+                        Mensaje = $"El propietario es nulo"
+                    };
+                }
                 if (GetById(propietario.Id) != null)
                 {
                     return new ResultadoOperacion
@@ -31,12 +39,13 @@ namespace BLL
                         Mensaje = $"El propietario ya existe\nId: {GetById(propietario.Id).Id} | Nombre: {GetById(propietario.Id).Nombre}"
                     };
                 }
-                if (repositorio.Save(propietario))
+                if (propietarioRepository.Save(propietario))
                 {
+                    propietarios.Add(propietario);
                     return new ResultadoOperacion
                     {
                         Exito = true,
-                        Mensaje = $"El veterinario se guardo correctamente\nId: {propietario.Id} | Nombre: {propietario.Nombre}"
+                        Mensaje = $"El propietario se guardo correctamente\nId: {propietario.Id} | Nombre: {propietario.Nombre}"
                     };
                 }
                 else
@@ -44,7 +53,7 @@ namespace BLL
                     return new ResultadoOperacion
                     {
                         Exito = false,
-                        Mensaje = $"Error al guardar el veterinario\nId: {propietario.Id} | Nombre: {propietario.Nombre}"
+                        Mensaje = $"Error al guardar el propietario\nId: {propietario.Id} | Nombre: {propietario.Nombre}"
                     };
                 }
             }
@@ -53,18 +62,19 @@ namespace BLL
                 return new ResultadoOperacion
                 {
                     Exito = false,
-                    Mensaje = string.Empty
+                    Mensaje = $"Error al guardar el propietario\nId: {propietario.Id} | Nombre: {propietario.Nombre}\n{ex.Message}"
                 };
             }
         }
-        public override ResultadoOperacion Delete(int id)
+        public ResultadoOperacion Delete(int id)
         {
             var propietario = GetById(id);
             if (propietario != null)
             {
                 string message = $"El propietario se elimino correctamente\nId: {propietario.Id} | Nombre: {propietario.Nombre}";
+                mascotaService.DeleteByPropietary(id);
                 propietarios.Remove(propietario);
-                repositorio.SaveList(propietarios);
+                propietarioRepository.SaveList(propietarios);
                 return new ResultadoOperacion
                 {
                     Exito = true,
@@ -78,19 +88,27 @@ namespace BLL
             };
         }
 
-        public override List<Propietario> GetAll()
+        public List<Propietario> GetAll()
         {
-            return propietarios;
+            return propietarioRepository.Read();
         }
 
-        public override Propietario GetById(int id)
+        public Propietario GetById(int id)
         {
             var propietario = BuscadorEntidad.ObtenerPropietarioPorId(propietarios, id);
             return propietario;
         }
 
-        public override ResultadoOperacion Update(Propietario propietario)
+        public ResultadoOperacion Update(Propietario propietario)
         {
+            if (propietario == null)
+            {
+                return new ResultadoOperacion()
+                {
+                    Exito = false,
+                    Mensaje = $"El propietario es nulo"
+                };
+            }
             if (GetById(propietario.Id) != null)
             {
                 foreach (var prop in propietarios)
@@ -104,7 +122,7 @@ namespace BLL
                         prop.Telefono = propietario.Telefono;
                     }
                 }
-                repositorio.SaveList(propietarios);
+                propietarioRepository.SaveList(propietarios);
                 return new ResultadoOperacion()
                 {
                     Exito = true,

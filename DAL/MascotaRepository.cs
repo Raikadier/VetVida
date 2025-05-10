@@ -24,6 +24,10 @@ namespace DAL
                 reader.Close();
                 return mascotas;
             }
+            catch (FileNotFoundException)
+            {
+                return new List<Mascota>();
+            }
             catch (Exception)
             {
                 return new List<Mascota>();

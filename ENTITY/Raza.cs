@@ -9,7 +9,7 @@ namespace ENTITY
     public class Raza : NameEntity
     {
         public Especie especie { get; set; }
-        public List<Mascota> Mascotas { get; set; }
+        public List<Mascota> Mascotas { get; set; } = new List<Mascota>();
         public override string ToString()
         {
             return $"{Id};{Nombre};{especie.Id}";

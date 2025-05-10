@@ -24,6 +24,10 @@ namespace DAL
                 reader.Close();
                 return propietarios;
             }
+            catch (FileNotFoundException)
+            {
+                return new List<Propietario>();
+            }
             catch (Exception)
             {
                 return new List<Propietario>();

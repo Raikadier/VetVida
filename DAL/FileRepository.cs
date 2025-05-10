@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public abstract class FileRepository<T>
+    public abstract class FileRepository<T> : IRepository<T>
     {
         protected string file=string.Empty;
         protected FileRepository(string file)
@@ -19,9 +19,17 @@ namespace DAL
         {
             try
             {
+                if(entity == null)
+                {
+                    throw new ArgumentNullException("El objeto no puede ser nulo");
+                }
+                if (!File.Exists(file))
+                {
+                    File.Create(file).Close();
+                }
                 StreamWriter writer = new StreamWriter(file, true);
                 writer.WriteLine(entity.ToString());
-                writer.Close(); 
+                writer.Close();   
                 return true;
             }
             catch (UnauthorizedAccessException ex)
@@ -33,6 +41,11 @@ namespace DAL
             {
                 return false;
                 throw new Exception($"Ruta malformada o con formato inválido: {ex.Message}");
+            }
+            catch (FileNotFoundException ex)
+            {
+                return false;
+                throw new Exception($"El archivo no existe: {ex.Message}");
             }
             catch (DirectoryNotFoundException ex)
             {
@@ -77,6 +90,11 @@ namespace DAL
             {
                 return false;
                 throw new Exception($"La carpeta de destino no existe: {ex.Message}");
+            }
+            catch(FileNotFoundException ex)
+            {
+                return false;
+                throw new Exception($"El archivo no existe: {ex.Message}");
             }
             catch (IOException ex)
             {

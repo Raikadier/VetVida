@@ -7,22 +7,29 @@ using System.Threading.Tasks;
 using DAL;
 namespace BLL
 {
-    public class VeterinarioService : LogicBase<Veterinario>
+    public class VeterinarioService : ILogic<Veterinario>
     {
-        private readonly FileRepository<Veterinario> repositorio;
-        private VeterinarioRepository veterinarioRepository;
+        private readonly VeterinarioRepository veterinarioRepository;
         private List<Veterinario> veterinarios;
-        public VeterinarioService(FileRepository<Veterinario> repositorio) : base(repositorio)
+        public VeterinarioService()
         {
-            this.repositorio = repositorio;
-            veterinarioRepository = new VeterinarioRepository("Veterinario.txt");
-            veterinarios = repositorio.Read();
+            veterinarioRepository = new VeterinarioRepository(Archivos.ARC_VETERINARIO);
+            veterinarios = veterinarioRepository.Read();
         }
 
-        public override ResultadoOperacion Save(Veterinario veterinario)
+        public ResultadoOperacion Save(Veterinario veterinario)
         {
             try
             {
+                if(veterinario == null)
+                {
+                    return new ResultadoOperacion
+                    {
+                        Exito = false,
+                        Mensaje = $"El veterinario es nulo"
+                    };
+                }
+
                 if (GetById(veterinario.Id) != null)
                 {
                     return new ResultadoOperacion
@@ -31,8 +38,9 @@ namespace BLL
                         Mensaje = $"El veterinario ya existe\nId: {GetById(veterinario.Id).Id} | Nombre: {GetById(veterinario.Id).Nombre}"
                     };
                 }
-                if (repositorio.Save(veterinario))
+                if (veterinarioRepository.Save(veterinario))
                 {
+                    veterinarios.Add(veterinario);
                     return new ResultadoOperacion
                     {
                         Exito = true,
@@ -53,18 +61,18 @@ namespace BLL
                 return new ResultadoOperacion
                 {
                     Exito = false,
-                    Mensaje = string.Empty
+                    Mensaje = $"Error al guardar el veterinario\nId: {veterinario.Id} | Nombre: {veterinario.Nombre}\n{ex.Message}"
                 };
             }
         }
-        public override ResultadoOperacion Delete(int id)
+        public ResultadoOperacion Delete(int id)
         {
             var vet = GetById(id);
             if (vet != null)
             {
                 string message = $"El veterinario se elimino correctamente\nId: {vet.Id} | Nombre: {vet.Nombre}";
                 veterinarios.Remove(vet);
-                repositorio.SaveList(veterinarios);
+                veterinarioRepository.SaveList(veterinarios);
                 return new ResultadoOperacion
                 {
                     Exito = true,
@@ -78,19 +86,28 @@ namespace BLL
             };
         }
 
-        public override List<Veterinario> GetAll()
+        public List<Veterinario> GetAll()
         {
-            return veterinarios;
+            return veterinarioRepository.Read();
         }
 
-        public override Veterinario GetById(int id)
+        public Veterinario GetById(int id)
         {
             var veterinario=BuscadorEntidad.ObtenerVeterinarioPorId(veterinarios, id);
+            //var x = veterinarios.FirstOrDefault<Veterinario>(v => v.Id == id);
             return veterinario;
         }
 
-        public override ResultadoOperacion Update(Veterinario veterinario)
+        public ResultadoOperacion Update(Veterinario veterinario)
         {
+            if (veterinario == null)
+            {
+                return new ResultadoOperacion()
+                {
+                    Exito = false,
+                    Mensaje = $"El veterinario es nulo"
+                };
+            }
             if (GetById(veterinario.Id) != null)
             {
                 foreach (var vet in veterinarios)
@@ -106,7 +123,7 @@ namespace BLL
 
                     }
                 }
-                repositorio.SaveList(veterinarios);
+                veterinarioRepository.SaveList(veterinarios);
                 return new ResultadoOperacion()
                 {
                     Exito = true,
