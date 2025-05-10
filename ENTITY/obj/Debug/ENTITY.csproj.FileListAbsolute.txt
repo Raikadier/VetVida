@@ -1,0 +1,6 @@
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\ENTITY\bin\Debug\ENTITY.dll
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\ENTITY\bin\Debug\ENTITY.pdb
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\ENTITY\obj\Debug\ENTITY.csproj.AssemblyReference.cache
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\ENTITY\obj\Debug\ENTITY.csproj.CoreCompileInputs.cache
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\ENTITY\obj\Debug\ENTITY.dll
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\ENTITY\obj\Debug\ENTITY.pdb

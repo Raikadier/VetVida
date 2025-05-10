@@ -1,0 +1,9 @@
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\bin\Debug\DAL.dll
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\bin\Debug\DAL.pdb
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\bin\Debug\ENTITY.dll
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\bin\Debug\ENTITY.pdb
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\obj\Debug\DAL.csproj.AssemblyReference.cache
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\obj\Debug\DAL.csproj.Up2Date
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\obj\Debug\DAL.dll
+D:\UNICESAR-2025\ICFES\CODE\Veterinaria\DAL\obj\Debug\DAL.pdb
