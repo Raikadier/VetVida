@@ -1,0 +1,2 @@
+1;14/04/2025 9:59:10 p. m.;2;3;Esto es un diagnostico;Esto es un tratamiento
+2;19/04/2025 9:59:46 p. m.;1;2;Esto es un segundo diagnostico;Esto es un segundo tratamiento

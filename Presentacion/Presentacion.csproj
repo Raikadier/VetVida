@@ -46,14 +46,125 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="FrmConsultaConsultas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FrmConsultaConsultas.Designer.cs">
+      <DependentUpon>FrmConsultaConsultas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultaEspecie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultaEspecie.Designer.cs">
+      <DependentUpon>FrmConsultaEspecie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultaMascota.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultaMascota.Designer.cs">
+      <DependentUpon>FrmConsultaMascota.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultaPropietario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultaPropietario.Designer.cs">
+      <DependentUpon>FrmConsultaPropietario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultaRaza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultaRaza.Designer.cs">
+      <DependentUpon>FrmConsultaRaza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultas.Designer.cs">
+      <DependentUpon>FrmConsultas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultaVeterinario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultaVeterinario.Designer.cs">
+      <DependentUpon>FrmConsultaVeterinario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEspecie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEspecie.Designer.cs">
+      <DependentUpon>FrmEspecie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMascota.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMascota.Designer.cs">
+      <DependentUpon>FrmMascota.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPropietario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPropietario.Designer.cs">
+      <DependentUpon>FrmPropietario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRaza.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRaza.Designer.cs">
+      <DependentUpon>FrmRaza.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVeterinario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVeterinario.Designer.cs">
+      <DependentUpon>FrmVeterinario.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmConsultaConsultas.resx">
+      <DependentUpon>FrmConsultaConsultas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultaEspecie.resx">
+      <DependentUpon>FrmConsultaEspecie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultaMascota.resx">
+      <DependentUpon>FrmConsultaMascota.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultaPropietario.resx">
+      <DependentUpon>FrmConsultaPropietario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultaRaza.resx">
+      <DependentUpon>FrmConsultaRaza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultas.resx">
+      <DependentUpon>FrmConsultas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultaVeterinario.resx">
+      <DependentUpon>FrmConsultaVeterinario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEspecie.resx">
+      <DependentUpon>FrmEspecie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMascota.resx">
+      <DependentUpon>FrmMascota.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPropietario.resx">
+      <DependentUpon>FrmPropietario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRaza.resx">
+      <DependentUpon>FrmRaza.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVeterinario.resx">
+      <DependentUpon>FrmVeterinario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +173,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -85,6 +197,24 @@
       <Project>{63f92e14-dc83-4f2a-94cc-5cc648f98cfa}</Project>
       <Name>ENTITY</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Propietario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Veterinario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Mascotas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Especie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Historial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Raza.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

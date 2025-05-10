@@ -1,0 +1,6 @@
+2;Perro de San huberto;2
+1;Chihuahua;1
+3;Pastor aleman;2
+4;Pez;3
+5;Pez globo;3
+6;Gato Exotico;1
