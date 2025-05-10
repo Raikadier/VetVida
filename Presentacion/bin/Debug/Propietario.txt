@@ -1,5 +1,0 @@
-1;Emiliano;Martinez;1032;341
-2;Lionel;Messi;1001;345
-3;Leandro;Paredes;111;311
-4;Pablo;Perez;9899;345
-5;Rafael;Quintero;8798;344

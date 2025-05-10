@@ -1,4 +1,0 @@
-1;Harold;Florez;1066;320;Rehabilitacion
-2;Britany;Oviedo;1066;310;Cirujia
-3;Copilot;GPT;9999;300;Neurocirujano
-4;Brent;White;7986;301;Cirujia
