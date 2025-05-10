@@ -1,0 +1,3 @@
+2;Canis familiari
+3;pez guppy
+1;Catus
